@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.OneButtonDlgFrag();
+					DialogFragment dlgFrag = new Popup.MessageOK();
 					dlgFrag.show(getFragmentManager(), "OneButton");
 				}
 			});
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.TwoButtonsDlgFrag();
+					DialogFragment dlgFrag = new Popup.MessageOKCancel();
 					dlgFrag.show(getFragmentManager(), "TwoButtons");
 				}
 			});
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.SelectorDlgFrag();
+					DialogFragment dlgFrag = new Popup.MessageYesNoCancel();
 					dlgFrag.show(getFragmentManager(), "ThreeButtons");
 				}
 			});
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.SelectorDlgFrag();
+					DialogFragment dlgFrag = new Popup.Selector();
 					dlgFrag.show(getFragmentManager(), "Selector");
 				}
 			});
@@ -58,8 +58,18 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.SingleChoiceDlgFrag();
+					DialogFragment dlgFrag = new Popup.SingleChoice();
 					dlgFrag.show(getFragmentManager(), "SingleChoice");
+				}
+			});
+		}
+		{
+			final Button view = findViewById(R.id.button_multipleChoice);
+			view.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					DialogFragment dlgFrag = new Popup.MultipleChoice();
+					dlgFrag.show(getFragmentManager(), "MultipleChoice");
 				}
 			});
 		}
@@ -68,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.DatePickerDlgFrag();
+					DialogFragment dlgFrag = new Popup.DatePicker();
 					dlgFrag.show(getFragmentManager(), "DatePicker");
 				}
 			});
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new Popup.TimePickerDlgFrag();
+					DialogFragment dlgFrag = new Popup.TimePicker();
 					dlgFrag.show(getFragmentManager(), "TimePicker");
 				}
 			});

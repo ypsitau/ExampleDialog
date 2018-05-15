@@ -7,18 +7,18 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.widget.DatePicker;
-import android.widget.TimePicker;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Popup {
-	public static class OneButtonDlgFrag extends DialogFragment implements DialogInterface.OnClickListener {
+	public static class MessageOK extends DialogFragment implements DialogInterface.OnClickListener {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(getActivity())
 					.setTitle("Title")
 					.setMessage("Message")
-					.setPositiveButton("OK", this)
+					.setPositiveButton(R.string.OK, this)
 					.create();
 		}
 
@@ -30,14 +30,14 @@ public class Popup {
 		}
 	}
 
-	public static class TwoButtonsDlgFrag extends DialogFragment implements DialogInterface.OnClickListener {
+	public static class MessageOKCancel extends DialogFragment implements DialogInterface.OnClickListener {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(getActivity())
 					.setTitle("Title")
 					.setMessage("Message")
-					.setPositiveButton("OK", this)
-					.setNegativeButton("Cancel", this)
+					.setPositiveButton(R.string.OK, this)
+					.setNegativeButton(R.string.Cancel, this)
 					.create();
 		}
 
@@ -51,15 +51,15 @@ public class Popup {
 		}
 	}
 
-	public static class ThreeButtonsDlgFrag extends DialogFragment implements DialogInterface.OnClickListener {
+	public static class MessageYesNoCancel extends DialogFragment implements DialogInterface.OnClickListener {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(getActivity())
 					.setTitle("Title")
 					.setMessage("Message")
-					.setPositiveButton("OK", this)
-					.setNegativeButton("Cancel", this)
-					.setNeutralButton("Later", this)
+					.setPositiveButton(R.string.Yes, this)
+					.setNegativeButton(R.string.No, this)
+					.setNeutralButton(R.string.Cancel, this)
 					.create();
 		}
 
@@ -75,7 +75,7 @@ public class Popup {
 		}
 	}
 
-	public static class SelectorDlgFrag extends DialogFragment implements DialogInterface.OnClickListener {
+	public static class Selector extends DialogFragment implements DialogInterface.OnClickListener {
 		static final String[] items = new String[]{
 				"item #1",
 				"item #2",
@@ -98,7 +98,7 @@ public class Popup {
 		}
 	}
 
-	public static class SingleChoiceDlgFrag extends DialogFragment implements DialogInterface.OnClickListener {
+	public static class SingleChoice extends DialogFragment implements DialogInterface.OnClickListener {
 		static final String[] items = new String[]{
 				"item #1",
 				"item #2",
@@ -119,7 +119,7 @@ public class Popup {
 							checkedItem = which;
 						}
 					})
-					.setPositiveButton("OK", this)
+					.setPositiveButton(R.string.OK, this)
 					.create();
 		}
 
@@ -129,7 +129,50 @@ public class Popup {
 		}
 	}
 
-	public static class DatePickerDlgFrag extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+	public static class MultipleChoice extends DialogFragment implements DialogInterface.OnClickListener {
+		static final String[] items = new String[]{
+				"item #1",
+				"item #2",
+				"item #3",
+				"item #4",
+				"item #5",
+		};
+
+		ArrayList<Integer> selectedItems;
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstancezState) {
+			selectedItems = new ArrayList<Integer>();
+			return new AlertDialog.Builder(getActivity())
+					.setTitle("Title")
+					.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							if (isChecked) {
+								selectedItems.add(which);
+							} else {
+								selectedItems.remove(Integer.valueOf(which));
+							}
+						}
+					})
+					.setPositiveButton(R.string.OK, this)
+					.create();
+		}
+
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if (which == DialogInterface.BUTTON_POSITIVE) {
+				String str = "";
+				for (Integer selectedItem : selectedItems) {
+					if (!str.isEmpty()) str += ",";
+					str += items[selectedItem];
+				}
+				App.Printf("Choice: %s\n", str);
+			}
+		}
+	}
+
+	public static class DatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Calendar calendar = Calendar.getInstance();
@@ -140,12 +183,12 @@ public class Popup {
 		}
 
 		@Override
-		public void onDateSet(DatePicker view, int year, int month, int day) {
+		public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
 			App.Printf("Picked data: %04d-%02d-%02d\n", year, month + 1, day);
 		}
 	}
 
-	public static class TimePickerDlgFrag extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+	public static class TimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Calendar c = Calendar.getInstance();
@@ -155,7 +198,7 @@ public class Popup {
 		}
 
 		@Override
-		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+		public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
 			App.Printf("Picked time: %02d:%02d\n", hourOfDay, minute);
 		}
 
