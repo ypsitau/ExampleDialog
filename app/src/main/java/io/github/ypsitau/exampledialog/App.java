@@ -29,7 +29,7 @@ public class App extends Application {
 		editText_log.setFocusable(false);
 		editText_log.setTextIsSelectable(true);
 		editText_log.setGravity(Gravity.TOP);
-		editText_log.setTextSize(10); // set font size 10sp
+		editText_log.setTextSize(14); // set font size 14sp
 		editText_log.setTypeface(Typeface.MONOSPACE);
 	}
 	static void Printf(String format, Object... args) {
