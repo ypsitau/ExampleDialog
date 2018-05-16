@@ -306,39 +306,47 @@ public class MainActivity extends AppCompatActivity {
 			if (!str.isEmpty()) str += ",";
 			str += MultipleChoiceDialogFragment.items[selectedItem];
 		}
-		App.Printf("Choice: %s\n", str);
+		App.Printf("Multiple Choice: %s\n", str);
 	}
 
-	public static class DatePickerDialogFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+	public static class DatePickerDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final MainActivity activity = (MainActivity)getActivity();
 			final Calendar calendar = Calendar.getInstance();
 			int year = calendar.get(Calendar.YEAR);
 			int month = calendar.get(Calendar.MONTH);
 			int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-			return new DatePickerDialog(getActivity(), this, year, month, dayOfMonth);
-		}
-
-		@Override
-		public void onDateSet(DatePicker view, int year, int month, int day) {
-			App.Printf("Picked data: %04d-%02d-%02d\n", year, month + 1, day);
+			return new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
+				@Override
+				public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+					activity.onPositive_DatePickerDialogFragment(year, month, dayOfMonth);
+				}
+			}, year, month, dayOfMonth);
 		}
 	}
 
-	public static class TimePickerDialogFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+	void onPositive_DatePickerDialogFragment(int year, int month, int day) {
+		App.Printf("Date Picker: %04d-%02d-%02d\n", year, month + 1, day);
+	}
+
+	public static class TimePickerDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			final Calendar c = Calendar.getInstance();
-			int hour = c.get(Calendar.HOUR_OF_DAY);
-			int minute = c.get(Calendar.MINUTE);
-			return new TimePickerDialog(getActivity(), this, hour, minute, true);
+			final MainActivity activity = (MainActivity)getActivity();
+			final Calendar calendar = Calendar.getInstance();
+			int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+			int minute = calendar.get(Calendar.MINUTE);
+			return new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+				@Override
+				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+					activity.onPositive_TimePickerDialogFragment(hourOfDay, minute);
+				}
+			}, hourOfDay, minute, true);
 		}
-
-		@Override
-		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			App.Printf("Picked time: %02d:%02d\n", hourOfDay, minute);
-		}
-
 	}
 
+	void onPositive_TimePickerDialogFragment(int hourOfDay, int minute) {
+		App.Printf("Time Picker: %02d:%02d\n", hourOfDay, minute);
+	}
 }
