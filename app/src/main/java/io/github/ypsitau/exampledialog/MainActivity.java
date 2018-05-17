@@ -24,179 +24,214 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		{
-			final Button view = findViewById(R.id.button_oneButton);
+			final Button view = findViewById(R.id.button_MessageDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new OneButtonDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "OneButton");
+					DialogFragment dlgFrag = MessageDialogFragment.newInstance(
+							"sample title", "sample message");
+					dlgFrag.show(getSupportFragmentManager(), "MessageDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_twoButtons);
+			final Button view = findViewById(R.id.button_OKDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new TwoButtonsDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "TwoButtons");
+					DialogFragment dlgFrag = new OKDialogFragment();
+					dlgFrag.show(getSupportFragmentManager(), "OKDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_threeButtons);
+			final Button view = findViewById(R.id.button_OKCancelDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					DialogFragment dlgFrag = new ThreeButtonsDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "ThreeButtons");
+					DialogFragment dlgFrag = new OKCancelDialogFragment();
+					dlgFrag.show(getSupportFragmentManager(), "OKCancelDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_selector);
+			final Button view = findViewById(R.id.button_YesNoCancelDialog);
+			view.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					DialogFragment dlgFrag = new YesNoCancelDialogFragment();
+					dlgFrag.show(getSupportFragmentManager(), "YesNoCancelDialog");
+				}
+			});
+		}
+		{
+			final Button view = findViewById(R.id.button_SelectorDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					DialogFragment dlgFrag = new SelectorDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "Selector");
+					dlgFrag.show(getSupportFragmentManager(), "SelectorDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_singleChoice);
+			final Button view = findViewById(R.id.button_SingleChoiceDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					DialogFragment dlgFrag = new SingleChoiceDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "SingleChoice");
+					dlgFrag.show(getSupportFragmentManager(), "SingleChoiceDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_multipleChoice);
+			final Button view = findViewById(R.id.button_MultiplChoiceDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					DialogFragment dlgFrag = new MultipleChoiceDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "MultipleChoice");
+					dlgFrag.show(getSupportFragmentManager(), "MultipleChoiceDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_date);
+			final Button view = findViewById(R.id.button_DatePickerDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					DialogFragment dlgFrag = new DatePickerDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "DatePicker");
+					dlgFrag.show(getSupportFragmentManager(), "DatePickerDialog");
 				}
 			});
 		}
 		{
-			final Button view = findViewById(R.id.button_time);
+			final Button view = findViewById(R.id.button_TimePickerDialog);
 			view.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					DialogFragment dlgFrag = new TimePickerDialogFragment();
-					dlgFrag.show(getSupportFragmentManager(), "TimePicker");
+					dlgFrag.show(getSupportFragmentManager(), "TimePickerDialog");
 				}
 			});
 		}
 		App.setLogEditText((EditText)findViewById(R.id.editText_log), false);
 	}
 
-	public static class OneButtonDialogFragment extends DialogFragment {
+	public static class MessageDialogFragment extends DialogFragment {
+		static final String KEY_TITLE = "TITLE";
+		static final String KEY_MESSAGE = "MESSAGE";
+		public static DialogFragment newInstance(String title, String message) {
+			DialogFragment dlgFrag = new MessageDialogFragment();
+			Bundle args = new Bundle();
+			args.putString(KEY_TITLE, title);
+			args.putString(KEY_MESSAGE, message);
+			dlgFrag.setArguments(args);
+			return dlgFrag;
+		}
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final MainActivity activity = (MainActivity)getActivity();
+			Bundle args = getArguments();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
-					.setMessage("Message")
+					.setTitle(args.getString(KEY_TITLE))
+					.setMessage(args.getString(KEY_MESSAGE))
+					.setPositiveButton(android.R.string.ok, null)
+					.create();
+		}
+	}
+
+	public static class OKDialogFragment extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final MainActivity activity = (MainActivity)getActivity();
+			Bundle args = getArguments();
+			return new AlertDialog.Builder(activity)
+					.setTitle("OK Dialog")
+					.setMessage("message")
 					.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onPositive_OneButtonDialogFragment();
+							activity.onPositive_OKDialogFragment();
 						}
 					})
 					.create();
 		}
 	}
 
-	void onPositive_OneButtonDialogFragment() {
-		App.Printf("One Button: Positive\n");
+	void onPositive_OKDialogFragment() {
+		App.Printf("OK Dialog: Positive\n");
 	}
 
-	public static class TwoButtonsDialogFragment extends DialogFragment {
+	public static class OKCancelDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final MainActivity activity = (MainActivity)getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
+					.setTitle("OKCancel Dialog")
 					.setMessage("Message")
 					.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onPositive_TwoButtonsDialogFragment();
+							activity.onPositive_OKCancelDialogFragment();
 						}
 					})
 					.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onNegative_TwoButtonsDialogFragment();
+							activity.onNegative_OKCancelDialogFragment();
 						}
 					})
 					.create();
 		}
 	}
 
-	void onPositive_TwoButtonsDialogFragment() {
-		App.Printf("Two Buttons: Positive\n");
+	void onPositive_OKCancelDialogFragment() {
+		App.Printf("OKCancel Dialog: Positive\n");
 	}
 
-	void onNegative_TwoButtonsDialogFragment() {
-		App.Printf("Two Buttons: Negative\n");
+	void onNegative_OKCancelDialogFragment() {
+		App.Printf("OKCancel Dialog: Negative\n");
 	}
 
-	public static class ThreeButtonsDialogFragment extends DialogFragment {
+	public static class YesNoCancelDialogFragment extends DialogFragment {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final MainActivity activity = (MainActivity)getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
+					.setTitle("YesNoCancel Dialog")
 					.setMessage("Message")
 					.setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onPositive_ThreeButtonsDialogFragment();
+							activity.onPositive_YesNoCancelDialogFragment();
 						}
 					})
 					.setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onNegative_ThreeButtonsDialogFragment();
+							activity.onNegative_YesNoCancelDialogFragment();
 						}
 					})
 					.setNeutralButton(R.string.Cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							activity.onNeutral_ThreeButtonsDialogFragment();
+							activity.onNeutral_YesNoCancelDialogFragment();
 						}
 					})
 					.create();
 		}
 	}
 
-	void onPositive_ThreeButtonsDialogFragment() {
-		App.Printf("Three Buttons: Positive\n");
+	void onPositive_YesNoCancelDialogFragment() {
+		App.Printf("YesNoCancel Dialog: Positive\n");
 	}
 
-	void onNegative_ThreeButtonsDialogFragment() {
-		App.Printf("Three Buttons: Negative\n");
+	void onNegative_YesNoCancelDialogFragment() {
+		App.Printf("YesNoCancel Dialog: Negative\n");
 	}
 
-	void onNeutral_ThreeButtonsDialogFragment() {
-		App.Printf("Three Buttons: Neutral\n");
+	void onNeutral_YesNoCancelDialogFragment() {
+		App.Printf("YesNoCancel Dialog: Neutral\n");
 	}
 
 	public static class SelectorDialogFragment extends DialogFragment {
@@ -212,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final MainActivity activity = (MainActivity)getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
+					.setTitle("Selector Dialog")
 					.setItems(items, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -224,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	void onPositive_SelectorDialogFragment(String item) {
-		App.Printf("Selector: %s\n", item);
+		App.Printf("Selector Dialog: %s\n", item);
 	}
 
 	public static class SingleChoiceDialogFragment extends DialogFragment {
@@ -242,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 		public Dialog onCreateDialog(Bundle savedInstancezState) {
 			final MainActivity activity = (MainActivity)getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
+					.setTitle("SingleChoice Dialog")
 					.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -260,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	void onPositive_SingleChoiceDialogFragment(String item) {
-		App.Printf("Single Choice: %s\n", item);
+		App.Printf("SingleChoice Dialog: %s\n", item);
 	}
 
 	public static class MultipleChoiceDialogFragment extends DialogFragment {
@@ -279,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 			selectedItems = new ArrayList<Integer>();
 			final MainActivity activity = (MainActivity)getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Title")
+					.setTitle("MultipleChoice Dialog")
 					.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -306,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 			if (!str.isEmpty()) str += ",";
 			str += MultipleChoiceDialogFragment.items[selectedItem];
 		}
-		App.Printf("Multiple Choice: %s\n", str);
+		App.Printf("MultipleChoice Dialog: %s\n", str);
 	}
 
 	public static class DatePickerDialogFragment extends DialogFragment {
@@ -327,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	void onPositive_DatePickerDialogFragment(int year, int month, int day) {
-		App.Printf("Date Picker: %04d-%02d-%02d\n", year, month + 1, day);
+		App.Printf("DatePicker Dialog: %04d-%02d-%02d\n", year, month + 1, day);
 	}
 
 	public static class TimePickerDialogFragment extends DialogFragment {
@@ -347,6 +382,6 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	void onPositive_TimePickerDialogFragment(int hourOfDay, int minute) {
-		App.Printf("Time Picker: %02d:%02d\n", hourOfDay, minute);
+		App.Printf("TimePicker Dialog: %02d:%02d\n", hourOfDay, minute);
 	}
 }

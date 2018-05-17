@@ -1,9 +1,13 @@
 package io.github.ypsitau.exampledialog;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;

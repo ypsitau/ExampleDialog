@@ -20,52 +20,58 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 			<Button
-				android:id="@+id/button_oneButton"
+				android:id="@+id/button_MessageDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="One Button" />
+				android:text="Message" />
 
 			<Button
-				android:id="@+id/button_twoButtons"
+				android:id="@+id/button_OKDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Two Buttons" />
+				android:text="OK" />
 
 			<Button
-				android:id="@+id/button_threeButtons"
+				android:id="@+id/button_OKCancelDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Three Buttons" />
+				android:text="OK-Cancel" />
 
 			<Button
-				android:id="@+id/button_selector"
+				android:id="@+id/button_YesNoCancelDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Selection" />
+				android:text="Yes-No-Cancel" />
 
 			<Button
-				android:id="@+id/button_singleChoice"
+				android:id="@+id/button_SelectorDialog"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Selector" />
+
+			<Button
+				android:id="@+id/button_SingleChoiceDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Single Choice" />
 
 			<Button
-				android:id="@+id/button_multipleChoice"
+				android:id="@+id/button_MultiplChoiceDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Multiple Choice" />
 
 			<Button
-				android:id="@+id/button_date"
+				android:id="@+id/button_DatePickerDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Date" />
+				android:text="Date Picker" />
 
 			<Button
-				android:id="@+id/button_time"
+				android:id="@+id/button_TimePickerDialog"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Time" />
+				android:text="Time Picker" />
 		</LinearLayout>
 	</HorizontalScrollView>
 
